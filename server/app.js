@@ -18,7 +18,7 @@ app.use(cookieParser());
 
 /* GET home page. */
 app.get('/', function (req, res, next) {
-  res.sendFile('/dist/index.html');
+  res.sendFile(path.join(__dirname, '../dist/index.html'));
 });
 
 app.post('/youtube', (req, res, next) => {
