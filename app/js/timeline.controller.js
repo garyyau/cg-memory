@@ -42,7 +42,6 @@ class TimelineController {
     this.loading++;
     return this.videoManager.getVideos()
       .then((videos) => {
-        console.log(videos);
         this.setVideoScale(videos);
         this.videos = this._.concat(this.videos, videos);
         this.setVideoContainerDirection();

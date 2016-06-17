@@ -5,11 +5,11 @@
   "private": true,
   "main": "start.js",
   "scripts": {
-    "setup": "npm i gulp gulp-cli browser-sync --g && npm i",
     "build": "gulp build",
+    "dev-start": "gulp build && concurrently \"node server/start.js\" \"gulp browser-sync\" \"gulp watch\"",
     "postinstall": "gulp build",
-    "dev-start": "gulp build && concurrently \"node --use_strict server/start.js\" \"gulp browser-sync\" \"gulp watch\"",
-    "start": "node --use_strict server/start.js"
+    "setup": "npm i gulp gulp-cli browser-sync --g && npm i",
+    "start": "node server/start.js"
   },
   "author": "Gary Yau <gyau88@gmail.com>",
   "license": "ISC",
@@ -34,10 +34,11 @@
     "gulp-util": "^3.0.7",
     "jquery": "^3.0.0",
     "lodash": "^4.13.1",
-    "ng-lodash": "^0.2.3",
+    "ng-lodash": "https://github.com/rockabox/ng-lodash.git#0.5.0",
     "require-dir": "^0.3.0",
     "run-sequence": "^1.2.1",
     "vinyl-source-stream": "^1.1.0",
-    "watchify": "^3.7.0"
+    "watchify": "^3.7.0",
+    "youtube-api": "^2.0.2"
   }
 }

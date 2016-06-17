@@ -5,6 +5,9 @@ const dest = './dist/';
 module.exports = {
   src,
   dest,
+  sync: {
+    port: 3000,
+  },
   pug: {
     src: `${src}/`,
     dest: `${dest}`,

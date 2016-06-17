@@ -4,12 +4,11 @@ const DEFAULT_NEXT_PAGE_TOKEN = '##########';
 
 
 class VideoManager {
-  constructor($q, lodash, youtubeFactory) {
+  constructor($http, $q, lodash) {
+    this.$http = $http;
     this.$q = $q;
     this._ = lodash;
-    this.youtubeFactory = youtubeFactory;
-
-    this._key = 'AIzaSyD37_ysUAUz4_TXYZh1H8vvTv_5CLHHNJA';
+    this._url = '/youtube/';
 
     this._channelId = 'UCUudDyi0JiVmSxarvU98YYQ';
     this._nextPageToken = DEFAULT_NEXT_PAGE_TOKEN;
@@ -24,30 +23,41 @@ class VideoManager {
       channelId: this._channelId,
       maxResults: '50',
       order: 'date',
-      key: this._key,
     };
     if (this._nextPageToken && this._nextPageToken != DEFAULT_NEXT_PAGE_TOKEN) {
-      config['nextPageToken'] = this._nextPageToken;
+      config['pageToken'] = this._nextPageToken;
     }
 
-    return this.youtubeFactory
-      .getVideosFromChannelById(config)
-      .then(
-        (response) => {
-          const data = response.data;
-          this._nextPageToken = data.nextPageToken;
+    const request = this.$http({
+      method: 'post',
+      url: `${this._url}search/list/`,
+      data: config,
+      cache: true,
+    }).then(
+      (response) => {
+        const data = response.data;
+        this._nextPageToken = data.nextPageToken;
 
-          const videoIds = this._.map(data.items, (item) => item.id.videoId);
-          const pVideos = this.youtubeFactory.getVideoById({
-            part: 'id,snippet,contentDetails,statistics',
-            videoId: this._.join(videoIds, ','),
-            key: this._key,
-          })
-          .then((response) => response.data.items);
+        const videoIds = this._.map(data.items, (item) => item.id.videoId);
+        const requestData = {
+          id: this._.join(videoIds, ','),
+          part: 'id,snippet,contentDetails,statistics',
+        };
 
-          return pVideos;
-        }
-      );
+        const pVideos = this.$http({
+          method: 'post',
+          url: `${this._url}videos/list/`,
+          data: requestData,
+          cache: true,
+        }).then((response) => {
+          return response.data.items;
+        });
+
+        return pVideos;
+      }
+    );
+
+    return request;
   }
 }
 
