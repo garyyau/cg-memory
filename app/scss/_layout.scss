@@ -1,0 +1,16 @@
+@import 'https://fonts.googleapis.com/css?family=Droid+Sans:400,700';
+
+a, div, p, span {
+  font-size: 14px;
+  font-family: 'Droid Sans', sans-serif;
+  line-height: 18px;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+body {
+  width: 100%;
+}
+.container {
+  min-height: 100%;
+  width: 100%;
+}

@@ -1,0 +1,16 @@
+html
+  head
+    link(href="./css/cgmemory.css" type="text/css" rel="stylesheet")
+  body(ng-app="cgmemory")
+    .container(ng-controller="TimelineController as vm")
+      .timeline-container()
+        .video-position-container(ng-repeat="video in vm.videos" ng-class="vm.getVideoContainerClass(video)")
+          .video-container.hvr-grow(ng-class="vm.getVideoThumbnailClass(video)")
+            .video--description.animated.fadeIn
+              span {{ video.snippet.title }}
+            img.video--thumbnail(ng-src="{{ video.snippet.thumbnails.medium.url }}"
+              title="{{ video.snippet.title }}")
+
+  script(src="./js/libs.js")
+  script(src="./js/bundle.js")
+
