@@ -41,6 +41,6 @@
     "jquery": "^3.0.0",
     "lodash": "^4.13.1",
     "ng-infinite-scroll": "^1.2.1",
-    "ng-lodash": "git@github.com:rockabox/ng-lodash.git#0.5.0"
+    "ng-lodash": "https://github.com/rockabox/ng-lodash.git#0.5.0"
   }
 }
