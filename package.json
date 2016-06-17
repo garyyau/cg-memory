@@ -22,7 +22,6 @@
     "concurrently": "^2.1.0",
     "cookie-parser": "^1.4.3",
     "del": "^2.2.0",
-    "express": "^4.13.4",
     "gulp": "^3.9.1",
     "gulp-autoprefixer": "^3.1.0",
     "gulp-concat": "^2.6.0",
@@ -38,6 +37,7 @@
   "dependencies": {
     "angular": "^1.5.6",
     "angular-youtube-api-factory": "^0.6.0",
+    "express": "^4.13.4",
     "jquery": "^3.0.0",
     "lodash": "^4.13.1",
     "ng-infinite-scroll": "^1.2.1",
