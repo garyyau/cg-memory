@@ -1,7 +1,6 @@
 'use strict';
 
 
-
 class TimelineController {
   constructor($q, $scope, $window, lodash, videoManager) {
     this.$q = $q;
