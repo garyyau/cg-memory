@@ -22,5 +22,6 @@ module.exports = {
   node: {
     dest: `${dest}/js/`,
     output: `libs.js`,
+    libs: ['angular', 'jquery', 'lodash', 'ng-lodash'],
   }
 };
