@@ -21,6 +21,7 @@ class VideoManager {
     const config = {
       part: 'id,snippet',
       channelId: this._channelId,
+      type: 'video',
       maxResults: '50',
       order: 'date',
     };

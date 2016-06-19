@@ -13,6 +13,8 @@ class TimelineController {
     this.channel = null;
     this.videos = [];
 
+    this.topItem = null;
+
     this.heightLeft = 0;
     this.heightRight = 0;
 

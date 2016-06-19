@@ -1,16 +1,26 @@
-@import 'https://fonts.googleapis.com/css?family=Droid+Sans:400,700';
+@import url(https://fonts.googleapis.com/css?family=Open+Sans:400,300,700);
 
 a, div, p, span {
-  font-size: 14px;
-  font-family: 'Droid Sans', sans-serif;
+  font-size: 12px;
+  font-family: 'Open Sans', sans-serif;
   line-height: 18px;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
 body {
   width: 100%;
+  background-color: $dark-grey;
 }
 .container {
-  min-height: 100%;
+  padding-bottom: 30px;
   width: 100%;
+
+  &:after {
+    display: block;
+    visibility: hidden;
+    clear: both;
+    height: 0;
+    content: " ";
+    font-size: 0;
+  }
 }

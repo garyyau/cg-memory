@@ -1,5 +1,3 @@
-$off-white: #EFEFEF;
-
 .video-position-container {
   width: 100%;
 }
@@ -15,10 +13,12 @@ $off-white: #EFEFEF;
 }
 .video-container {
   position: relative;
-  margin: 3px;
+  box-sizing: border-box;
+  border: 4px solid $off-white;
 
   &:hover {
     z-index: 1000;
+    border-color: $primary-color;
     cursor: pointer;
   }
 }
@@ -35,9 +35,9 @@ $off-white: #EFEFEF;
   bottom: 0;
   left: 0;
   z-index: 1;
-  display: none;
-  padding: 10px;
-  background-color: rgba(0, 0, 0, 0.75);
+  // display: none;
+  padding: 4px 6px;
+  background-color: rgba(0, 0, 0, 0.675);
 
   span {
     color: $off-white;
