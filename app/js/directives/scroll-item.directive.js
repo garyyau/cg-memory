@@ -11,8 +11,8 @@ class ScrollItem {
       object: '=scrollItem',
     };
   }
-  link(scope, element, attrs, scrollItemTracker) {
-    scrollItemTracker.register(element, scope.object);
+  link(scope, element, attrs, trackerCtrl) {
+    trackerCtrl.register(element, scope.object);
   }
   static export($parse) {
     return new ScrollItem($parse);

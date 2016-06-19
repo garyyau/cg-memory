@@ -22,15 +22,15 @@ class ScrollItemTracker {
 }
 
 class ScrollItemTrackerController {
-  constructor($window, $scope, lodash) {
+  constructor($scope, $window, lodash) {
     this._ = lodash;
     this.$scope = $scope;
+    this.$window = $window;
     this.items = [];
     this.loaded = 0;
 
     $window.addEventListener('scroll', () => {
-      this.$scope.model = this.find($window.pageYOffset);
-      this.$scope.$apply();
+      this.update();
     });
   }
   calculate() {
@@ -38,6 +38,7 @@ class ScrollItemTrackerController {
       const position = $(scrollItem.element).offsetParent().position().top;
       scrollItem.position = position;
     });
+    this.update();
   }
   find(offset) {
     for (let i = 0; i < this.items.length; i++) {
@@ -56,6 +57,11 @@ class ScrollItemTrackerController {
       if (this.loaded == this.items.length) {
         this.calculate();
       }
+    });
+  }
+  update() {
+    this.$scope.$apply(() => {
+      this.$scope.model = this.find(this.$window.pageYOffset);
     });
   }
 }

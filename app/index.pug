@@ -5,7 +5,7 @@ html
       | [ng\:cloak], [ng-cloak], [data-ng-cloak], [x-ng-cloak], .ng-cloak, .x-ng-cloak { display: none !important; }
   body(ng-app="cgmemory")
     .container(ng-controller="TimelineController as vm" ng-cloak)
-      scroll-item-tracker(model="vm.topItem")
+      scroll-item-tracker(model="vm.videoAtTop")
         .video-position-container(
           ng-repeat="video in vm.videos"
           ng-class="vm.getVideoContainerClass(video)"
@@ -13,7 +13,7 @@ html
           .video-container.hvr-grow(ng-class="vm.getVideoThumbnailClass(video)")
             .video--description.animated.fadeIn
               //- span {{ video.snippet.title }}
-              span {{ vm.topItem.snippet.publishedAt }} {{ video.snippet.publishedAt }}
+              span {{ vm.videoAtTop.snippet.publishedAt }} {{ video.snippet.publishedAt }}
             img.video--thumbnail(ng-src="{{ video.snippet.thumbnails.medium.url }}"
               title="{{ video.snippet.title }}"
               scroll-item="video")

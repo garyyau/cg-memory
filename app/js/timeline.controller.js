@@ -12,11 +12,7 @@ class TimelineController {
     this.loading = 0;
     this.channel = null;
     this.videos = [];
-
-    this.topItem = null;
-
-    this.heightLeft = 0;
-    this.heightRight = 0;
+    this.videoAtTop = {};
 
     this.lastHeight = 0;
 
