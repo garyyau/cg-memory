@@ -14,8 +14,8 @@ class ScrollItem {
   link(scope, element, attrs, trackerCtrl) {
     trackerCtrl.register(element, scope.object);
   }
-  static export($parse) {
-    return new ScrollItem($parse);
+  static export() {
+    return new ScrollItem();
   }
 }
 

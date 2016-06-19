@@ -29,9 +29,7 @@ class ScrollItemTrackerController {
     this.items = [];
     this.loaded = 0;
 
-    $window.addEventListener('scroll', () => {
-      this.update();
-    });
+    $window.addEventListener('scroll', () => { this.$scope.$apply(() => this.update())});
   }
   calculate() {
     this._.forEach(this.items, (scrollItem) => {
@@ -43,7 +41,7 @@ class ScrollItemTrackerController {
   find(offset) {
     for (let i = 0; i < this.items.length; i++) {
       const item = this.items[i];
-      if (item.position > offset) {
+      if (item.position >= offset) {
         return item.object;
       }
     }
@@ -56,13 +54,12 @@ class ScrollItemTrackerController {
       this.loaded++;
       if (this.loaded == this.items.length) {
         this.calculate();
+        this.$scope.$apply(() => this.update());
       }
     });
   }
   update() {
-    this.$scope.$apply(() => {
-      this.$scope.model = this.find(this.$window.pageYOffset);
-    });
+    this.$scope.model = this.find(this.$window.pageYOffset);
   }
 }
 
