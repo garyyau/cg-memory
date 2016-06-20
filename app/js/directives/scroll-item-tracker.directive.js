@@ -32,6 +32,7 @@ class ScrollItemTrackerController {
     this.items = [];
     this.loaded = 0;
 
+
     $window.addEventListener('scroll', () => { this.$scope.$apply(() => this.update())});
   }
   calculate() {
