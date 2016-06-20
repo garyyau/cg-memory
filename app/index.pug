@@ -9,7 +9,7 @@ html
       .timeline-nav
         .timeline-nav--item(ng-repeat="location in vm.splitLocations | orderBy: 'start'"
           ng-click="vm.scrollTo(location.start)"
-          ng-class="{'active': vm.isActiveNavItem(location.value)}"
+          ng-class="{'active': vm.isActive(location)}"
         ) {{ location.value }}
       scroll-item-tracker(model="vm.videoAtTop" split-fn="vm.getVideoPublishedYear" split-locations="vm.splitLocations")
         .video-position-container(
@@ -18,8 +18,7 @@ html
         )
           .video-container.hvr-grow(ng-class="vm.getVideoThumbnailClass(video)")
             .video--description.animated.fadeIn
-              //- span {{ video.snippet.title }}
-              span {{ video.snippet.publishedAt }}
+              span {{ video.snippet.title }}
             img.video--thumbnail(ng-src="{{ video.snippet.thumbnails.medium.url }}"
               title="{{ video.snippet.title }}"
               scroll-item="video")

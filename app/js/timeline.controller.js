@@ -18,8 +18,6 @@ class TimelineController {
     this.videoAtTop = {};
     this.splitLocations = [];
 
-    window.getVideoAtTop = () => this.videoAtTop;
-
     this.lastHeight = 0;
 
     this.getVideoPublishedYear = this.getVideoPublishedYear.bind(this);
@@ -33,7 +31,16 @@ class TimelineController {
     this.getVideos();
   }
   scrollTo(position) {
-    $('body').animate({scrollTop: position}, 1000);
+    const current = this.$window.pageYOffset;
+    const distance = Math.abs(current - position);
+    const total = $('body').height();
+    const percentage = distance / total;
+
+    const minspeed = 1000;
+    const maxspeed = 4000;
+    const speed = minspeed + percentage * (maxspeed - minspeed);
+
+    $('body').animate({scrollTop: position}, speed);
   }
   getVideoPublishedYear(video) {
     const published = this.moment(video.snippet.publishedAt);
@@ -43,7 +50,6 @@ class TimelineController {
     this.loading++;
     return this.videoManager.getAllVideos()
       .then((videos) => {
-        console.log(videos);
         this.setVideoScale(videos);
         this.videos = this._.concat(this.videos, videos);
         this.setVideoContainerDirection();
@@ -92,6 +98,18 @@ class TimelineController {
     if (scale == 2) { return 'video-container--md'; }
     if (scale == 3) { return 'video-container--lg'; }
     if (scale == 4) { return 'video-container--xl'; }
+  }
+  isActive(location) {
+    const locations = this._.sortBy(this.splitLocations, 'start');
+    const currentPosition = this.$window.pageYOffset;
+
+    for (let i = 0; i < locations.length; i++) {
+      const current = locations[i];
+      const next = locations[i+1];
+      if (!next || next.start > currentPosition) {
+        return current.value == location.value;
+      }
+    }
   }
   isActiveNavItem(year) {
     const currentPosition = this.$window.pageYOffset;
