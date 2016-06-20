@@ -4,7 +4,13 @@ const express = require('express');
 const YouTube = require('youtube-api');
 
 const router = express.Router();
-const settings = require('./../settings');
+
+let settings = null
+try {
+  settings = require('./../settings');
+} catch(err) {
+  settings = require('./../../../data/settings.js');
+}
 
 
 // Authenticate YouTube using API Key
