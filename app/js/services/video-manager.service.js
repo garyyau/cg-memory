@@ -1,6 +1,18 @@
 'use strict';
 
-const DEFAULT_NEXT_PAGE_TOKEN = '##########';
+const YOUTUBE_CHANNEL_ID = 'UCUudDyi0JiVmSxarvU98YYQ';
+
+const YOUTUBE_SEARCH_LIST_REQUEST = {
+  part: 'id,snippet',
+  channelId: YOUTUBE_CHANNEL_ID,
+  type: 'video',
+  maxResults: '50',
+  order: 'date',
+};
+const YOUTUBE_VIDEO_LIST_REQUEST = {
+  id: '',
+  part: 'id,snippet,statistics',
+};
 
 
 class VideoManager {
@@ -11,54 +23,59 @@ class VideoManager {
     this._url = '/youtube/';
 
     this._channelId = 'UCUudDyi0JiVmSxarvU98YYQ';
-    this._nextPageToken = DEFAULT_NEXT_PAGE_TOKEN;
   }
-  getVideos() {
-    if (!this._nextPageToken) {
-      return this.$q.resolve([]);
-    }
-
-    const config = {
-      part: 'id,snippet',
-      channelId: this._channelId,
-      type: 'video',
-      maxResults: '50',
-      order: 'date',
-    };
-    if (this._nextPageToken && this._nextPageToken != DEFAULT_NEXT_PAGE_TOKEN) {
-      config['pageToken'] = this._nextPageToken;
-    }
+  getAllVideos() {
+    return this.getVideos();
+  }
+  getVideosFromSearch(pageToken) {
+    const postData = YOUTUBE_SEARCH_LIST_REQUEST;
+    if (pageToken) { postData['pageToken'] = pageToken; }
 
     const request = this.$http({
       method: 'post',
       url: `${this._url}search/list/`,
-      data: config,
-      cache: true,
-    }).then(
-      (response) => {
-        const data = response.data;
-        this._nextPageToken = data.nextPageToken;
-
-        const videoIds = this._.map(data.items, (item) => item.id.videoId);
-        const requestData = {
-          id: this._.join(videoIds, ','),
-          part: 'id,snippet,contentDetails,statistics',
-        };
-
-        const pVideos = this.$http({
-          method: 'post',
-          url: `${this._url}videos/list/`,
-          data: requestData,
-          cache: true,
-        }).then((response) => {
-          return response.data.items;
-        });
-
-        return pVideos;
-      }
-    );
+      data: postData,
+    }).then(response => response.data);
 
     return request;
+  }
+  getVideosData(ids) {
+    const postData = YOUTUBE_VIDEO_LIST_REQUEST;
+    postData.id = this._.join(ids, ',');
+
+    const request = this.$http({
+      method: 'post',
+      url: `${this._url}videos/list/`,
+      data: postData,
+    }).then(response => response.data);
+
+    return request;
+  }
+  getVideos(pageToken) {
+
+    const pVideosFromSearch = this.getVideosFromSearch(pageToken)
+      .then((searchData) => {
+        const nextPageToken = searchData.nextPageToken;
+
+        const promises = [];
+        const videoIds = this._.map(searchData.items, (item) => item.id.videoId);
+        promises.push(this.getVideosData(videoIds));
+        if (nextPageToken) { promises.push(this.getVideos(nextPageToken)); }
+
+        const request = this.$q.all(promises)
+          .then((responses) => {
+            if (!nextPageToken) { return responses.shift().items; }
+
+            const videosData = responses.shift().items;
+            const nextPageVideos = responses.shift();
+
+            return this._.concat(videosData, nextPageVideos);
+          });
+
+        return request;
+      });
+
+    return pVideosFromSearch;
   }
 }
 

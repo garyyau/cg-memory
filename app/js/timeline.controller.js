@@ -2,43 +2,48 @@
 
 
 class TimelineController {
-  constructor($q, $scope, $window, lodash, videoManager) {
+  constructor($q, $scope, $window, lodash, moment, videoManager) {
     this.$q = $q;
     this.$scope = $scope;
     this.$window = $window;
     this._ = lodash;
+    this.moment = moment;
     this.videoManager = videoManager;
 
     this.loading = 0;
     this.channel = null;
     this.videos = [];
+    this.activeYears = ['2016', '2015', '2014', '2013', '2012', '2011', '2010', '2009'];
+
     this.videoAtTop = {};
+    this.splitLocations = [];
+
+    window.getVideoAtTop = () => this.videoAtTop;
 
     this.lastHeight = 0;
 
+    this.getVideoPublishedYear = this.getVideoPublishedYear.bind(this);
     this.activate();
+  }
+  getYearStart(year) {
+    if (!this.splitLocations[year]) return null;
+    return this.splitLocations[year].start;
   }
   activate() {
     this.getVideos();
-    this.setupInfiniteLoad();
   }
-  setupInfiniteLoad() {
-    this.$window.addEventListener('scroll', () => {
-      const windowHeight = document.body.offsetHeight;
-      const distanceToBottom = windowHeight - (window.scrollY + window.innerHeight);
-
-      if (distanceToBottom < 1000 && windowHeight !== this.lastHeight) {
-        this.lastHeight = windowHeight;
-        this.$scope.$apply(() => {
-          this.getVideos();
-        });
-      }
-    });
+  scrollTo(position) {
+    $('body').animate({scrollTop: position}, 1000);
+  }
+  getVideoPublishedYear(video) {
+    const published = this.moment(video.snippet.publishedAt);
+    return published.year();
   }
   getVideos() {
     this.loading++;
-    return this.videoManager.getVideos()
+    return this.videoManager.getAllVideos()
       .then((videos) => {
+        console.log(videos);
         this.setVideoScale(videos);
         this.videos = this._.concat(this.videos, videos);
         this.setVideoContainerDirection();
@@ -65,7 +70,7 @@ class TimelineController {
 
       const height = video.snippet.thumbnails.medium.height;
       const width = video.snippet.thumbnails.medium.width;
-      const scaledHeight = height / width * scaleWidths[scale] + 6;
+      const scaledHeight = height / width * scaleWidths[scale] + 8;
 
       if (heightLeft + scaledHeight < heightRight) {
         heightLeft += scaledHeight;
@@ -87,6 +92,16 @@ class TimelineController {
     if (scale == 2) { return 'video-container--md'; }
     if (scale == 3) { return 'video-container--lg'; }
     if (scale == 4) { return 'video-container--xl'; }
+  }
+  isActiveNavItem(year) {
+    const currentPosition = this.$window.pageYOffset;
+    for (let i = 0; i < this.activeYears.length; i++) {
+      const theyear = this.activeYears[i];
+      const nextyear = this.activeYears[i+1];
+      if (this.getYearStart(nextyear) > currentPosition || !nextyear) {
+        return theyear == year;
+      }
+    }
   }
 }
 

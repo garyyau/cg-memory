@@ -2,6 +2,7 @@
 
 import angular from 'angular';
 
+import 'angular-moment';
 import 'ng-lodash';
 
 import TimelineController from './timeline.controller';
@@ -12,7 +13,7 @@ import VideoManagerService from './services/video-manager.service';
 
 const CGMemoryApp =
   angular
-    .module('cgmemory', ['ngLodash']);
+    .module('cgmemory', ['angularMoment', 'ngLodash']);
 
 CGMemoryApp.controller('TimelineController', TimelineController);
 CGMemoryApp.directive('scrollItem', ScrollItemDirective);

@@ -15,6 +15,7 @@
   "license": "ISC",
   "dependencies": {
     "angular": "^1.5.7",
+    "angular-moment": "^1.0.0-beta.6",
     "babel-preset-es2015": "^6.9.0",
     "babel-preset-stage-1": "^6.5.0",
     "babelify": "^7.3.0",
@@ -34,6 +35,7 @@
     "gulp-util": "^3.0.7",
     "jquery": "^3.0.0",
     "lodash": "^4.13.1",
+    "moment-timezone": "^0.5.4",
     "ng-lodash": "https://github.com/rockabox/ng-lodash.git#0.5.0",
     "require-dir": "^0.3.0",
     "run-sequence": "^1.2.1",
