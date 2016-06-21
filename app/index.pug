@@ -8,8 +8,8 @@ html
       .background
       .timeline-nav
         .timeline-nav--item(ng-repeat="location in vm.splitLocations | orderBy: 'start'"
-          ng-click="vm.scrollTo(location.start)"
-          ng-class="{'active': vm.isActive(location)}"
+          ng-click="vm.scrollTo(location.value)"
+          ng-class="{'active': vm.isActiveNavItem(location)}"
         ) {{ location.value }}
       scroll-item-tracker(model="vm.videoAtTop" split-fn="vm.getVideoPublishedYear" split-locations="vm.splitLocations")
         .video-position-container(

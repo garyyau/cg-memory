@@ -42,7 +42,10 @@ class ScrollItemTrackerController {
       const position = $(trackedItem.element).offsetParent().position().top;
       trackedItem.position = position;
 
-      if (fn) { trackedItem.splitVal = fn(trackedItem.object); }
+      if (fn) {
+        trackedItem.splitVal = fn(trackedItem.object);
+        trackedItem.element.attr('split-val', fn(trackedItem.object));
+      }
     });
   }
   calculateSplit() {

@@ -13,24 +13,20 @@ class TimelineController {
     this.loading = 0;
     this.channel = null;
     this.videos = [];
-    this.activeYears = ['2016', '2015', '2014', '2013', '2012', '2011', '2010', '2009'];
 
     this.videoAtTop = {};
     this.splitLocations = [];
 
-    this.lastHeight = 0;
-
     this.getVideoPublishedYear = this.getVideoPublishedYear.bind(this);
     this.activate();
-  }
-  getYearStart(year) {
-    if (!this.splitLocations[year]) return null;
-    return this.splitLocations[year].start;
   }
   activate() {
     this.getVideos();
   }
-  scrollTo(position) {
+  scrollTo(value) {
+    const elements = $(`[split-val='${value}']`);
+    const position = $(elements[0]).offsetParent().position().top;
+
     const current = this.$window.pageYOffset;
     const distance = Math.abs(current - position);
     const total = $('body').height();
@@ -99,7 +95,7 @@ class TimelineController {
     if (scale == 3) { return 'video-container--lg'; }
     if (scale == 4) { return 'video-container--xl'; }
   }
-  isActive(location) {
+  isActiveNavItem(location) {
     const locations = this._.sortBy(this.splitLocations, 'start');
     const currentPosition = this.$window.pageYOffset;
 
@@ -108,16 +104,6 @@ class TimelineController {
       const next = locations[i+1];
       if (!next || next.start > currentPosition) {
         return current.value == location.value;
-      }
-    }
-  }
-  isActiveNavItem(year) {
-    const currentPosition = this.$window.pageYOffset;
-    for (let i = 0; i < this.activeYears.length; i++) {
-      const theyear = this.activeYears[i];
-      const nextyear = this.activeYears[i+1];
-      if (this.getYearStart(nextyear) > currentPosition || !nextyear) {
-        return theyear == year;
       }
     }
   }
