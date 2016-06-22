@@ -23,11 +23,13 @@ class TimelineController {
   activate() {
     this.scrollTracker.registerSplitFn(this.getVideoPublishedYear.bind(this));
     this.getVideos();
+
+    this.$window.addEventListener('scroll', () => this.$scope.$apply());
   }
 
-  scrollTo(value) {
-    const elements = $(`[split-val='${value}']`);
-    const position = $(elements[0]).offsetParent().position().top;
+  scrollTo(splitVal) {
+    const location = this.scrollTracker.getSplitLocation(splitVal);
+    const position = location.start;
 
     const current = this.$window.pageYOffset;
     const distance = Math.abs(current - position);
@@ -108,15 +110,15 @@ class TimelineController {
     if (scale == 4) { return 'video-container--xl'; }
   }
 
-  isActiveNavItem(location) {
-    const locations = this._.sortBy(this.splitLocations, 'start');
+  isActiveNavItem(splitVal) {
     const currentPosition = this.$window.pageYOffset;
+    const splitVals = this.getSplitVals();
 
-    for (let i = 0; i < locations.length; i++) {
-      const current = locations[i];
-      const next = locations[i+1];
+    for (let i = 0; i < splitVals.length; i++) {
+      const current = this.scrollTracker.getSplitLocation(splitVals[i]);
+      const next = splitVals[i+1] ? this.scrollTracker.getSplitLocation(splitVals[i+1]) : null;
       if (!next || next.start > currentPosition) {
-        return current.value == location.value;
+        return splitVals[i] == splitVal;
       }
     }
   }

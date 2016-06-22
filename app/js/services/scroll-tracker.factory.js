@@ -29,6 +29,18 @@ class ScrollTracker {
     this.splitFn = fn;
   }
 
+  getSplitLocation(splitVal) {
+    const elements = $(`[split-val='${splitVal}']`);
+    const first = this._.head(elements);
+    const last = this._.last(elements);
+
+    const firstTop = $(first).offsetParent().position().top;
+    const lastTop = $(last).offsetParent().position().top;
+    const lastHeight = $(last).offsetParent().outerHeight();
+
+    return { start: firstTop, end: lastTop + lastHeight };
+  }
+
   getSplitVals() {
     return this.splitVals;
   }

@@ -10,6 +10,7 @@ html
       .timeline-nav
         .timeline-nav--item(ng-repeat="splitVal in vm.getSplitVals()"
           ng-click="vm.scrollTo(splitVal)"
+          ng-class="{'active': vm.isActiveNavItem(splitVal)}"
         ) {{ splitVal }}
 
       .timeline-videos
