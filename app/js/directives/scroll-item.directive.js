@@ -2,22 +2,22 @@
 
 import angular from 'angular';
 
-
 class ScrollItem {
   constructor() {
     this.restrict = 'A';
-    this.require = '^^scrollItemTracker';
     this.scope = {
       object: '=scrollItem',
+      tracker: '=',
     };
   }
-  link(scope, element, attrs, trackerCtrl) {
-    trackerCtrl.register(element, scope.object);
+
+  link(scope, element, attrs) {
+    scope.tracker.registerItem(element, scope.object);
   }
+
   static export() {
     return new ScrollItem();
   }
 }
-
 
 export default ScrollItem.export;

@@ -19,6 +19,7 @@ class ScrollItemTracker {
       splitLocations: '=?',
     };
   }
+
   static export() {
     return new ScrollItemTracker();
   }
@@ -31,7 +32,6 @@ class ScrollItemTrackerController {
     this.$window = $window;
     this.items = [];
     this.loaded = 0;
-
 
     $window.addEventListener('scroll', () => { this.$scope.$apply(() => this.update())});
   }

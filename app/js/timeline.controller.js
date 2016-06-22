@@ -1,13 +1,13 @@
 'use strict';
 
-
 class TimelineController {
-  constructor($q, $scope, $window, lodash, moment, videoManager) {
+  constructor($q, $scope, $window, lodash, moment, scrollTracker, videoManager) {
     this.$q = $q;
     this.$scope = $scope;
     this.$window = $window;
     this._ = lodash;
     this.moment = moment;
+    this.scrollTracker = scrollTracker;
     this.videoManager = videoManager;
 
     this.loading = 0;
@@ -17,12 +17,14 @@ class TimelineController {
     this.videoAtTop = {};
     this.splitLocations = [];
 
-    this.getVideoPublishedYear = this.getVideoPublishedYear.bind(this);
     this.activate();
   }
+
   activate() {
+    this.scrollTracker.registerSplitFn(this.getVideoPublishedYear.bind(this));
     this.getVideos();
   }
+
   scrollTo(value) {
     const elements = $(`[split-val='${value}']`);
     const position = $(elements[0]).offsetParent().position().top;
@@ -38,10 +40,16 @@ class TimelineController {
 
     $('body').animate({scrollTop: position}, speed);
   }
+
+  getSplitVals() {
+    return this.scrollTracker.getSplitVals();
+  }
+
   getVideoPublishedYear(video) {
     const published = this.moment(video.snippet.publishedAt);
     return published.year();
   }
+
   getVideos() {
     this.loading++;
     return this.videoManager.getAllVideos()
@@ -52,6 +60,7 @@ class TimelineController {
         this.loading--;
       });
   }
+
   setVideoScale(videos) {
     const videoCount = videos.length;
     const orderByViews = this._.sortBy(videos, video => parseInt(video.statistics.viewCount));
@@ -62,6 +71,7 @@ class TimelineController {
       video.snippet.thumbnails.scale = scale;
     });
   }
+
   setVideoContainerDirection() {
     let heightLeft = 0;
     let heightRight = 0;
@@ -84,10 +94,12 @@ class TimelineController {
       }
     });
   }
+
   getVideoContainerClass(video) {
     if (video.direction == 'left') { return 'video-position-container--left'; }
     if (video.direction == 'right') { return 'video-position-container--right'; }
   }
+
   getVideoThumbnailClass(video) {
     const scale = video.snippet.thumbnails.scale;
     if (scale == 1) { return 'video-container--sm'; }
@@ -95,6 +107,7 @@ class TimelineController {
     if (scale == 3) { return 'video-container--lg'; }
     if (scale == 4) { return 'video-container--xl'; }
   }
+
   isActiveNavItem(location) {
     const locations = this._.sortBy(this.splitLocations, 'start');
     const currentPosition = this.$window.pageYOffset;
@@ -108,6 +121,5 @@ class TimelineController {
     }
   }
 }
-
 
 export default TimelineController;
