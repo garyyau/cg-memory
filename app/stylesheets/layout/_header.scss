@@ -1,0 +1,29 @@
+// -----------------------------------------------------------------------------
+// This file contains all styles related to the header of the site/application.
+// -----------------------------------------------------------------------------
+.header {
+  position: fixed;
+  width: 100%;
+  height: 100%;
+  background: image('header-background.png');
+}
+
+.header--content {
+  padding: 100px 50px;
+  height: 100%;
+  text-align: right;
+}
+
+.header--pre-text {
+  font-size: 20px;
+}
+
+.header--main-text {
+  text-transform: uppercase;
+  font-weight: bold;
+  font-size: 70px;;
+}
+
+.header--post-text {
+  font-size: 30px;
+}

@@ -1,0 +1,30 @@
+.navigation {
+  position: fixed;
+  top: 140px;
+  z-index: 300;
+}
+.navigation-item {
+  padding: 8px 0 6px;
+  width: 77px;
+  border-bottom: 1px solid #aaa;
+  color: #aaa;
+  text-align: right;
+  font-size: 16px;
+  font-family: 'Oswald';
+  line-height: 20px;
+  opacity: 0.6;
+  cursor: pointer;
+  transition: all 0.2s ease-in;
+}
+.navigation-item--active {
+  border-bottom: 1px solid $off-white;
+  color: $off-white;
+  opacity: 1.0;
+}
+.navigation-item:hover,
+.navigation-item--active {
+  width: 140px;
+  font-weight: bold;
+  font-size: 48px;
+  line-height: 60px;
+}

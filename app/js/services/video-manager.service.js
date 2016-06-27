@@ -9,13 +9,14 @@ const YOUTUBE_SEARCH_LIST_REQUEST = {
   maxResults: '50',
   order: 'date',
 };
+
 const YOUTUBE_VIDEO_LIST_REQUEST = {
   id: '',
   part: 'id,snippet,statistics',
 };
 
-
 class VideoManager {
+
   constructor($http, $q, lodash) {
     this.$http = $http;
     this.$q = $q;
@@ -24,9 +25,11 @@ class VideoManager {
 
     this._channelId = 'UCUudDyi0JiVmSxarvU98YYQ';
   }
+
   getAllVideos() {
     return this.getVideos();
   }
+
   getVideosFromSearch(pageToken) {
     const postData = YOUTUBE_SEARCH_LIST_REQUEST;
     if (pageToken) { postData['pageToken'] = pageToken; }
@@ -39,6 +42,7 @@ class VideoManager {
 
     return request;
   }
+
   getVideosData(ids) {
     const postData = YOUTUBE_VIDEO_LIST_REQUEST;
     postData.id = this._.join(ids, ',');
@@ -51,8 +55,8 @@ class VideoManager {
 
     return request;
   }
-  getVideos(pageToken) {
 
+  getVideos(pageToken) {
     const pVideosFromSearch = this.getVideosFromSearch(pageToken)
       .then((searchData) => {
         const nextPageToken = searchData.nextPageToken;
@@ -77,6 +81,7 @@ class VideoManager {
 
     return pVideosFromSearch;
   }
+
 }
 
 

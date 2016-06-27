@@ -1,0 +1,37 @@
+.video-list {
+
+}
+
+
+
+
+.video-list--positioner {
+  width: 100%;
+}
+.video-list--positioner--left {
+  display: flex;
+  justify-content: center;
+}
+.video-list--positioner--right {
+  display: flex;
+  justify-content: center;
+  float: none;
+  clear: none;
+}
+
+
+
+
+@media (min-width: 1224px) {
+  .video-list--positioner {
+    width: 50%;
+  }
+  .video-list--positioner--left {
+    justify-content: flex-end;
+  }
+  .video-list--positioner--right {
+    justify-content: flex-start;
+    float: right;
+    clear: right;
+  }
+}

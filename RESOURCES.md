@@ -8,3 +8,9 @@
 - http://www.loisjeans.com/web2012/es
 - http://www.annefrank.org/timeline#!/en/Subsites/Timeline/Postwar-period-1945--present-day/The-Anne-Frank-House-opens/
 - https://mixpanel.com/about/
+
+- http://wondereel.co.uk/
+- http://maaemo.no/
+- http://logicart.pl/en
+- http://avenirclinic.com/
+- http://eattheordinary.com/

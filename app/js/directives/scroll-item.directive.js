@@ -3,6 +3,7 @@
 import angular from 'angular';
 
 class ScrollItem {
+
   constructor() {
     this.restrict = 'A';
     this.scope = {
@@ -18,6 +19,7 @@ class ScrollItem {
   static export() {
     return new ScrollItem();
   }
+
 }
 
 export default ScrollItem.export;

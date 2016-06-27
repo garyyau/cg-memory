@@ -1,0 +1,45 @@
+.video {
+  position: relative;
+  box-sizing: border-box;
+  border: 4px solid $off-white;
+
+  &:hover {
+    z-index: 200;
+    border-color: $light-grey;
+    cursor: pointer;
+  }
+}
+.video--sm img,
+.video--md img,
+.video--lg img,
+.video--xl img {
+  width: 100%;
+}
+
+.video--description {
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  z-index: 50;
+  display: none;
+  padding: 4px 6px;
+  background-color: rgba(0, 0, 0, 0.675);
+
+  span {
+    color: $off-white;
+  }
+}
+.video:hover .video--description {
+  display: block;
+}
+
+
+
+
+@media (min-width: 1224px) {
+  .video--sm img { width: 180px; }
+  .video--md img { width: 240px; }
+  .video--lg img { width: 360px; }
+  .video--xl img { width: 480px; }
+}

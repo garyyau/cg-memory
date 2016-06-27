@@ -4,27 +4,27 @@ html
     style
       | [ng\:cloak], [ng-cloak], [data-ng-cloak], [x-ng-cloak], .ng-cloak, .x-ng-cloak { display: none !important; }
   body(ng-app="cgmemory")
-    .container(ng-controller="TimelineController as vm" ng-cloak)
-      .background
-
-      .timeline-nav
-        .timeline-nav--item(ng-repeat="splitVal in vm.getSplitVals()"
-          ng-click="vm.scrollTo(splitVal)"
-          ng-class="{'active': vm.isActiveNavItem(splitVal)}"
+    section.panel.header
+      .header--content
+        .header--pre-text In memory of...
+        .header--main-text Christina Grimmie
+        .header--post-text RIP March 12th 1994 - June 10th 2016
+    section.panel.timeline.clearfix(ng-controller="TimelineController as timeline" ng-cloak)
+      nav.navigation
+        .navigation-item(ng-repeat="splitVal in timeline.getSplitVals()"
+          ng-click="timeline.scrollTo(splitVal)"
+          ng-class="{'navigation-item--active': timeline.isActiveNavItem(splitVal)}"
         ) {{ splitVal }}
 
-      .timeline-videos
-        .video-position-container(
-          ng-repeat="video in vm.videos"
-          ng-class="vm.getVideoContainerClass(video)"
-        )
-          .video-container.hvr-grow(ng-class="vm.getVideoThumbnailClass(video)")
+      .videos-list
+        .video-list--positioner(ng-class="timeline.getVideoContainerClass(video)" ng-repeat="video in timeline.videos")
+          .video.hvr-grow(ng-class="timeline.getVideoThumbnailClass(video)")
             .video--description.animated.fadeIn
               span {{ video.snippet.title }}
             img.video--thumbnail(ng-src="{{ video.snippet.thumbnails.medium.url }}"
               title="{{ video.snippet.title }}"
               scroll-item="video"
-              tracker="vm.scrollTracker")
+              tracker="timeline.scrollTracker")
 
   script(src="https://code.jquery.com/jquery-2.2.4.min.js" integrity="sha256-BbhdlvQf/xTY9gja0Dq3HiwQF8LaCRTXxZKRutelT44=" crossorigin="anonymous")
   script(src="./js/libs.js")

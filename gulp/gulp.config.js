@@ -13,7 +13,7 @@ module.exports = {
     dest: `${dest}`,
   },
   scss: {
-    src: `${src}/scss/`,
+    src: `${src}/stylesheets/`,
     dest: `${dest}/css/`,
     output: `cgmemory.css`,
   },
